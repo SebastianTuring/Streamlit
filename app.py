@@ -53,4 +53,5 @@ if st.button("Generate Images"):
     grid = make_grid(samples, nrow=5, padding=2)
     npimg = grid.numpy().squeeze()
 
-    st.image(npimg, width=500, caption=f"Generated digit: {digit}")
+    st.image(npimg.reshape((28, -1, 1)), width=500, caption=f"Generated digit: {digit}")
+
