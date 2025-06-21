@@ -56,6 +56,7 @@ if st.button("Generate Images"):
     grid = (grid * 255).astype(np.uint8)
     grid = np.expand_dims(grid, axis=-1)  # Now shape is (H, W, 1)
 
-    st.image(grid, caption=f"Generated digit: {digit}", channels="GRAY", width=500)
+    grid_rgb = np.repeat(grid, 3, axis=-1)  # (H, W, 3)
+    st.image(grid_rgb, caption=f"Generated digit: {digit}", width=500)
 
 
