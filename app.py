@@ -52,8 +52,10 @@ if st.button("Generate Images"):
 
     grid = make_grid(samples, nrow=5, padding=2)
     # Convert grid tensor to numpy and format properly
-    grid = grid.squeeze(0).numpy()  # Remove channel dimension → shape: (H, W)
-    grid = (grid * 255).astype(np.uint8)  # Convert to [0,255] uint8 image
+    grid = grid.squeeze(0).numpy()  # (H, W)
+    grid = (grid * 255).astype(np.uint8)
+    grid = np.expand_dims(grid, axis=-1)  # Now shape is (H, W, 1)
 
     st.image(grid, caption=f"Generated digit: {digit}", channels="GRAY", width=500)
+
 
