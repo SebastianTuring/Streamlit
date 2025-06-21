@@ -57,6 +57,12 @@ if st.button("Generate Images"):
     grid = np.expand_dims(grid, axis=-1)  # Now shape is (H, W, 1)
 
     grid_rgb = np.repeat(grid, 3, axis=-1)  # (H, W, 3)
-    st.image(grid_rgb, caption=f"Generated digit: {digit}", width=500)
+    imgs = samples.detach().cpu().numpy()  # (5, 1, 28, 28)
+    imgs = imgs.squeeze(1)  # (5, 28, 28)
+    imgs = (imgs * 255).astype(np.uint8)
+    imgs_rgb = np.stack([np.stack([img]*3, axis=-1) for img in imgs])  # (5, 28, 28, 3)
+
+    captions = [f"{digit}" for _ in range(5)]
+    st.image(imgs_rgb, caption=captions, width=150)
 
 
