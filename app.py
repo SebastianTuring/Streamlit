@@ -51,7 +51,9 @@ if st.button("Generate Images"):
         samples = model.decode(z, c).view(-1, 1, 28, 28)
 
     grid = make_grid(samples, nrow=5, padding=2)
-    npimg = grid.numpy().squeeze()
+    # Convert grid tensor to numpy and format properly
+    grid = grid.squeeze(0).numpy()  # Remove channel dimension → shape: (H, W)
+    grid = (grid * 255).astype(np.uint8)  # Convert to [0,255] uint8 image
 
-    st.image(npimg.reshape((28, -1, 1)), width=500, caption=f"Generated digit: {digit}")
+    st.image(grid, caption=f"Generated digit: {digit}", channels="GRAY", width=500)
 
